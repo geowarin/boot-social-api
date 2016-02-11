@@ -1,18 +1,52 @@
-const Main = () => (
+const LoginForm = () => (
+    <form action="/signin/twitter" method="post">
+        <h1>Please login</h1>
+        <button type="submit">Login</button>
+    </form>
+);
+
+
+const LogoutButton = (props) => (
     <div>
-        <h1>Hello lol</h1>
-        <form action="/signin/twitter" method="post">
-            <button type="submit">Login</button>
-        </form>
+        <h2>Your name is {props.name}</h2>
+        <button onClick={props.logout}>Logout</button>
     </div>
 );
 
-fetch('/api/session', {credentials: 'same-origin'})
-    .then(res => res.json())
-    .then((r) => console.log(r));
-//fetch('/signin/twitter', {method: 'post'})
-//    .then(res => res.json())
-//    .then((r) => console.log(r));
+
+class Main extends React.Component {
+
+    constructor(...args) {
+        super(...args);
+        this.state = {name: null};
+    }
+
+    componentDidMount() {
+        fetch('/api/session', {credentials: 'same-origin'})
+            .then(res => res.json())
+            .then(session => this.setState({name: session.name}));
+    }
+
+    logout() {
+        console.log("logout");
+        fetch('/api/session', {method: 'delete', credentials: 'same-origin'})
+            .then(res => this.setState({name: null}));
+    }
+
+    render() {
+        const profile = this.state.name ?
+            <LogoutButton name={this.state.name} logout={() => this.logout()}/> :
+            <LoginForm />;
+        console.log(this.state);
+        return (
+            <div>
+                {profile}
+            </div>
+        )
+    }
+}
 
 
-ReactDOM.render(<Main />, document.getElementById('container'));
+ReactDOM.render(
+    <Main />
+    , document.getElementById('container'));
