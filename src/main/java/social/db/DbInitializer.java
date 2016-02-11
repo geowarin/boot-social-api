@@ -32,5 +32,4 @@ public class DbInitializer implements InitializingBean {
         populator.addScript(resource);
         DatabasePopulatorUtils.execute(populator, dataSource);
     }
-
 }
