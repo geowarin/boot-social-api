@@ -1,4 +1,4 @@
-package social.api;
+package social.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,13 +6,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.UserProfile;
-import org.springframework.social.connect.web.SignInAdapter;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.NativeWebRequest;
 
-@Component
-public class AuthenticatingSignInAdapter implements SignInAdapter {
-    protected static final Logger log = LoggerFactory.getLogger(AuthenticatingSignInAdapter.class);
+public class AuthUtil {
+    protected static final Logger log = LoggerFactory.getLogger(AuthUtil.class);
 
     public static void authenticate(Connection<?> connection) {
         UserProfile userProfile = connection.fetchUserProfile();
@@ -20,11 +16,5 @@ public class AuthenticatingSignInAdapter implements SignInAdapter {
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         log.info("User {} {} connected.", userProfile.getFirstName(), userProfile.getLastName());
-    }
-
-    @Override
-    public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {
-        authenticate(connection);
-        return null;
     }
 }

@@ -5,7 +5,7 @@ const LoginForm = () => (
     </form>
 );
 
-const LogoutButton = (props) => (
+const LogoutComponent = (props) => (
     <div>
         <h2>Your name is {props.name}</h2>
         <button onClick={props.logout}>Logout</button>
@@ -33,7 +33,7 @@ class Main extends React.Component {
 
     render() {
         const profile = this.state.name ?
-            <LogoutButton name={this.state.name} logout={() => this.logout()}/> :
+            <LogoutComponent name={this.state.name} logout={() => this.logout()}/> :
             <LoginForm />;
         return (
             <div>
