@@ -2,7 +2,6 @@ package social.social;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.social.config.annotation.SocialConfigurer;
 import org.springframework.social.connect.web.SignInAdapter;
 import social.security.AuthUtil;
